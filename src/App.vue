@@ -45,15 +45,26 @@
       </button>
     </form>
 
+    <suspense v-if="submitted">
+      <users-list />
+      <template #fallback>
+        <div class="loader"></div>
+      </template>
+    </suspense>
   </div>
 </template>
 
 <script>
+import { ref } from "vue";
+
+import UsersList from "./components/UsersList.vue";
+
 import { useForm } from "./hooks/form";
 import { required, minLength } from "./utils/validation";
 
 export default {
   setup() {
+    const submitted = ref(false);
     const form = useForm({
       email: {
         value: "",
@@ -68,9 +79,13 @@ export default {
     function submit() {
       console.log("Email", form.email.value);
       console.log("Password", form.password.value);
+      submitted.value = true;
     }
 
-    return { form, submit };
+    return { form, submit, submitted };
+  },
+  components: {
+    UsersList,
   },
 };
 </script>
