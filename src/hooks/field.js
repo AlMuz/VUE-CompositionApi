@@ -4,6 +4,7 @@ export function useField(field) {
   const valid = ref(true);
   const value = ref(field.value);
   const errors = reactive({});
+  const touched = ref(false);
 
   const reassign = (val) => {
     valid.value = true;
@@ -18,8 +19,8 @@ export function useField(field) {
   };
 
   watch(value, reassign);
-
   //    fire for first time
   reassign(value.value);
-  return { value, valid, errors };
+
+  return { value, valid, errors, touched, blur: () => (touched.value = true) };
 }
