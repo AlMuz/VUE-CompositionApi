@@ -40,8 +40,11 @@
         </small>
       </div>
 
-      <button class="btn primary" type="submit">Submit</button>
+      <button class="btn primary" type="submit" :disabled="!form.valid">
+        Submit
+      </button>
     </form>
+
   </div>
 </template>
 
@@ -62,7 +65,10 @@ export default {
       },
     });
 
-    function submit() {}
+    function submit() {
+      console.log("Email", form.email.value);
+      console.log("Password", form.password.value);
+    }
 
     return { form, submit };
   },
